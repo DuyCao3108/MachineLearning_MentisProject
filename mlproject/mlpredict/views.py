@@ -44,9 +44,9 @@ def results(request):
                                      personality_extroversion,personality_neuroticism,
                                      knowledge_importance,knowledge_otherapp]])
             if y_pred[0] == 0:
-                y_pred = 'DOES Intend to pay'
-            else:
                 y_pred = 'DOES NOT Intend to pay'
+            else:
+                y_pred = 'DOES Intend to pay'
             return render(request, 'results.html', {'result' : y_pred})
      
 
