@@ -3,7 +3,8 @@ from django.http import HttpResponse
 import pickle as pkl
 
 from joblib import dump, load
-model = load(r"C:\Users\Windows 10\mlproject\pkmodel" + ".pickle")
+#model = load(r"C:\Users\Windows 10\mlproject\pkmodel" + ".pickle")
+model = load('pkmodel.pickle')
 
 # def form(request):
 #     if request.method == 'POST':
