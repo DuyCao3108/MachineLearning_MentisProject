@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iris Application</title>
+</head>
+<body>
+    <h1>Iris Django Application</h1>
+    <hr>
+    <form action="" method="POST">
+        {% csrf_token %}
+        price : <input type="number" name="price" required><br>
+        perception_usefullness : <input type="number" name="perception_usefullness" required><br>
+        percetion_aesthetic : <input type="number" name="percetion_aesthetic" required><br>
+        perception_trustworthy : <input type="number" name="perception_trustworthy" required><br>
+        perception_relaxing : <input type="number" name="perception_relaxing" required><br>
+        personality_extroversion : <input type="number" name="personality_extroversion" required><br>
+        personality_neuroticism : <input type="number" name="personality_neuroticism" required><br>
+        knowledge_importance : <input type="number" name="knowledge_importance" required><br>
+        knowledge_otherapp : <input type="number" name="knowledge_otherapp" required><br>
+        <input type="submit">
+    </form>
+    {% if result %}
+        <h1>Khach hang nay {{result}}</h1>
+    {% endif %}
+</body>
+</html>
+								

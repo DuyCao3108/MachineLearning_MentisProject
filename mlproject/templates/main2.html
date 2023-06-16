@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Survey Form</title>
+    <style>
+        body {
+        text-align: center;
+        }
+        
+        .question {
+        margin: 20px auto;
+        max-width: 500px;
+        }
+        
+        .likert-scale {
+        display: flex;
+        align-items: center;
+        }
+
+        .likert-scale span {
+        flex: 1;
+        text-align: center;
+        }
+
+        .likert-scale input {
+        flex: 10;
+        }
+
+        .likert-scale input::-webkit-slider-thumb {
+        /* Custom styling for the slider thumb */
+        -webkit-appearance: none;
+        appearance: none;
+        width: 20px;
+        height: 20px;
+        background-color: #007bff;
+        cursor: pointer;
+        }
+
+    </style>
+</head>
+<body>
+    <h1>Survey Form</h1>
+  
+    <p>Please answer the following questions:</p>
+    <hr>
+    <form action="" method="POST">
+        {% csrf_token %}
+        <div class="question">
+            <label for="q1">Question 1: Enter a number less than 100:</label>
+            <input type="number" id="price" name="price" max="100" required>
+          </div>
+
+        <div class="question">
+            <label for="perception_usefullness">Question 2: Rate the statement:</label>
+            <div class="likert-scale">
+                <span>1</span>
+                <input type="range" id="q2" name="perception_usefullness" min="1" max="7" required>
+                <span>7</span>
+            </div>
+        </div>  
+          
+        <div class="question">
+            <label for="percetion_aesthetic">Question 3: Rate the statement:</label>
+            <div class="likert-scale">
+                <span>1</span>
+                <input type="range" id="q2" name="percetion_aesthetic" min="1" max="7" required>
+                <span>7</span>
+            </div>
+        </div> 
+
+        <div class="question">
+            <label for="perception_trustworthy">Question 4: Rate the statement:</label>
+            <div class="likert-scale">
+                <span>1</span>
+                <input type="range" id="q2" name="perception_trustworthy" min="1" max="7" required>
+                <span>7</span>
+            </div>
+        </div> 
+
+        <div class="question">
+            <label for="perception_relaxing">Question 5: Rate the statement:</label>
+            <div class="likert-scale">
+                <span>1</span>
+                <input type="range" id="q2" name="perception_relaxing" min="1" max="7" required>
+                <span>7</span>
+            </div>
+        </div> 
+
+        <div class="question">
+            <label for="personality_extroversion">Question 6: Rate the statement:</label>
+            <div class="likert-scale">
+                <span>1</span>
+                <input type="range" id="q2" name="personality_extroversion" min="1" max="7" required>
+                <span>7</span>
+            </div>
+        </div> 
+
+        <div class="question">
+            <label for="personality_neuroticism">Question 7: Rate the statement:</label>
+            <div class="likert-scale">
+                <span>1</span>
+                <input type="range" id="q2" name="personality_neuroticism" min="1" max="7" required>
+                <span>7</span>
+            </div>
+        </div> 
+
+        <div class="question">
+            <label for="knowledge_importance">Question 8: Rate the statement:</label>
+            <div class="likert-scale">
+                <span>1</span>
+                <input type="range" id="q2" name="knowledge_importance" min="1" max="7" required>
+                <span id="selected-number">7</span>
+            </div>
+        </div>
+        
+        <script>
+            const rangeInput = document.getElementById('q2');
+            const selectedNumber = document.getElementById('selected-number');
+        
+            rangeInput.addEventListener('input', () => {
+                selectedNumber.textContent = rangeInput.value;
+            });
+        </script>
+        
+
+        <div class="question">
+            <label for="knowledge_otherapp">Question 9: Rate the statement:</label>
+            <div class="likert-scale">
+                <span>1</span>
+                <input type="range" id="q2" name="knowledge_otherapp" min="1" max="7" required>
+                <span>7</span>
+            </div>
+        </div> 
+
+        <input type="submit">
+    </form>
+    {% if result %}
+        <h1>Khach hang nay {{result}}</h1>
+    {% endif %}
+</body>
+</html>
+								

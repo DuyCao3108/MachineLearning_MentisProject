@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <title>MENTIS USERs' INTENTION PREDICTION TOOL</title>
+    <style>
+        .small-size {
+  font-size: 0.8em; /* Adjust the font size as needed */
+}
+input[type="submit"] {
+  background-color: #86C8BC;
+  color: #140404;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+input[type="submit"]:hover {
+  background-color: #0056b3;
+}
+h1 {
+  color: #E966A0; /* Purple color */
+}
+h2 {
+  color: #6554AF; /* Purple color */
+}
+h3 {
+  color: #9575DE; /* Purple color */
+}
+h1 {
+  color: #a2007c; /* Purple color */
+}
+
+p {
+  color: #7a5a94; /* Pink color */
+}
+
+        body {
+  text-align: center;
+  font-family: 'Montserrat';
+  background-color: #f5f0f6;
+}
+
+.question {
+  margin: 20px auto;
+  max-width: 500px;
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.question label {
+  display: block;
+  margin-bottom: 10px;
+  color: #7a5a94;
+  font-weight: bold;
+}
+
+.likert-scale {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 10px;
+  position: relative;
+}
+
+.likert-scale::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  border-top: 2px solid #a2007c; /* Line color */
+}
+
+.likert-scale span {
+  flex: 1;
+  text-align: center;
+  color: #7a5a94;
+  font-size: 16px;
+  position: relative;
+  z-index: 1;
+}
+
+.likert-scale input {
+  flex: 10;
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  background-color: #ffffff;
+  height: 10px;
+  border-radius: 5px;
+  outline: none;
+  opacity: 0.7;
+  transition: opacity 0.2s;
+  position: relative;
+  z-index: 1;
+}
+
+.likert-scale input::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  background-color: #a2007c;
+  cursor: pointer;
+  border-radius: 50%;
+  position: relative;
+  z-index: 2;
+}
+
+.likert-scale input::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  background-color: #a2007c;
+  cursor: pointer;
+  border-radius: 50%;
+  position: relative;
+  z-index: 2;
+}
+
+.likert-scale input::-ms-thumb {
+  width: 20px;
+  height: 20px;
+  background-color: #a2007c;
+  cursor: pointer;
+  border-radius: 50%;
+  position: relative;
+  z-index: 2;
+}
+
+.selected-value {
+  margin-top: 10px;
+  color: #7a5a94;
+  font-size: 16px;
+}
+
+
+    </style>
+</head>
+<body>
+    <h1>MENTIS USERs' INTENTION PREDICTION TOOL</h1>
+  
+    <h2>
+        <strong>Guidance: </strong>
+    </h2>
+    <p>
+        - This tool helps predict users' intention to pay for premium subsciption. It was a machine learning model trained by DuyCao, using data from survey's data set. 
+    </p>
+    <p>
+        <strong>- To use it:</strong> Input data by inserting the price the customer is offerd and rating each statement regrading user's psychology. The scale from 1 to 7 represents the extent to which you think that statement is true about that user (1 = Very inaccurate!; 7 = Vey accurate!)
+    </p>
+    <hr>
+    {% if result %}
+        <h2> There is more than 70% that this user {{result}}</h2>
+    {% endif %}
+    <form action="results" method="POST">
+        {% csrf_token %}
+        <div class="question">
+            <label for="q1">Question 1: This user wil be offed a price of:</label>
+            <div>
+                <span class="small-size"> Unit: 1,000 VND. Input example: 70 (means 60,000 VND). Must less than 100</span>
+            </div>
+            <input type="number" id="price" name="price" max="100" required>
+          </div>
+
+          <div class="question">
+            <label for="perception_usefullness">Question 2: This user perceive the Mentis app to be useful:</label>
+            <div class="likert-scale">
+                <span>1</span>
+                <input type="range" id="q2" name="perception_usefullness" min="1" max="7" required>
+                <span>7</span>
+            </div>
+            <p id="selectedValue_2"> Q2: </p>
+        </div> 
+
+        
+        
+          
+        <div class="question">
+            <label for="percetion_aesthetic">Question 3: This user perceive the Mentis app to look visually pleasing:</label>
+            <div class="likert-scale">
+                <span>1</span>
+                <input type="range" id="q3" name="percetion_aesthetic" min="1" max="7" required>
+                <span>7</span>
+            </div>
+            <p id="selectedValue_3"> Q3: </p>
+        </div> 
+        
+
+
+
+
+
+        <div class="question">
+            <label for="perception_trustworthy">Question 4: This user trust the Mentis app:</label>
+            <div class="likert-scale">
+                <span>1</span>
+                <input type="range" id="q4" name="perception_trustworthy" min="1" max="7" required>
+                <span>7</span>
+            </div>
+            <p id="selectedValue_4"> Q4: </p>
+        </div> 
+       
+
+
+
+
+
+        <div class="question">
+            <label for="perception_relaxing">Question 5: This user finds the Mentis app to look relaxing:</label>
+            <div class="likert-scale">
+                <span>1</span>
+                <input type="range" id="q5" name="perception_relaxing" min="1" max="7" required>
+                <span>7</span>
+            </div>
+            <p id="selectedValue_5"> Q5: </p>
+        </div> 
+        
+
+
+
+
+
+        <div class="question">
+            <label for="personality_extroversion">Question 6: This user is introverted:</label>
+            <div class="likert-scale">
+                <span>1</span>
+                <input type="range" id="q6" name="personality_extroversion" min="1" max="7" required>
+                <span>7</span>
+            </div>
+            <p id="selectedValue_6"> Q6: </p>
+        </div> 
+        
+
+
+
+
+
+
+
+        <div class="question">
+            <label for="personality_neuroticism">Question 7: This user often worries/gets stressed out/overthinks:</label>
+            <div class="likert-scale">
+                <span>1</span>
+                <input type="range" id="q7" name="personality_neuroticism" min="1" max="7" required>
+                <span>7</span>
+            </div>
+            <p id="selectedValue_7"> Q7: </p>
+        </div> 
+        
+
+
+
+
+
+
+
+        <div class="question">
+            <label for="knowledge_importance">Question 8: This user understands the importance of a healthy mentality:</label>
+            <div class="likert-scale">
+                <span>1</span>
+                <input type="range" id="q8" name="knowledge_importance" min="1" max="7" required>
+                <span id="selected-number">7</span>
+            </div>
+            <p id="selectedValue_8"> Q8: </p>
+        </div>
+        
+
+
+        
+
+        <div class="question">
+            <label for="knowledge_otherapp">Question 9: This user awares of other apps that are similar to Mentis:</label>
+            <div class="likert-scale">
+                <span>1</span>
+                <input type="range" id="q9" name="knowledge_otherapp" min="1" max="7" required>
+                <span>7</span>
+            </div>
+            <p id="selectedValue_9"> Q9: </p>
+        </div> 
+
+
+
+
+
+
+
+        <script>
+            var rangeInput_2 = document.getElementById("q2");
+            var selectedValue_2 = document.getElementById("selectedValue_2");
+        
+            rangeInput_2.addEventListener("input", function() {
+                selectedValue_2.textContent = "Q2: " + rangeInput_2.value;
+            });
+
+
+            var rangeInput_3 = document.getElementById("q3");
+            var selectedValue_3 = document.getElementById("selectedValue_3");
+        
+            rangeInput_3.addEventListener("input", function() {
+                selectedValue_3.textContent = "Q3: " + rangeInput_3.value;
+            });
+
+            var rangeInput_4 = document.getElementById("q4");
+            var selectedValue_4 = document.getElementById("selectedValue_4");
+
+            rangeInput_4.addEventListener("input", function() {
+                selectedValue_4.textContent = "Q4: " + rangeInput_4.value;
+            });
+
+            var rangeInput_5 = document.getElementById("q5");
+            var selectedValue_5 = document.getElementById("selectedValue_5");
+
+            rangeInput_5.addEventListener("input", function() {
+                selectedValue_5.textContent = "Q5: " + rangeInput_5.value;
+            });
+
+
+            var rangeInput_6 = document.getElementById("q6");
+            var selectedValue_6 = document.getElementById("selectedValue_6");
+
+            rangeInput_6.addEventListener("input", function() {
+                selectedValue_6.textContent = "Q6: " + rangeInput_6.value;
+            });
+
+            var rangeInput_7 = document.getElementById("q7");
+            var selectedValue_7 = document.getElementById("selectedValue_7");
+
+            rangeInput_7.addEventListener("input", function() {
+                selectedValue_7.textContent = "Q7: " + rangeInput_7.value;
+            });
+
+            var rangeInput_8 = document.getElementById("q8");
+            var selectedValue_8 = document.getElementById("selectedValue_8");
+
+            rangeInput_8.addEventListener("input", function() {
+                selectedValue_8.textContent = "Q8: " + rangeInput_8.value;
+            });
+
+            var rangeInput_9 = document.getElementById("q9");
+            var selectedValue_9 = document.getElementById("selectedValue_9");
+
+            rangeInput_9.addEventListener("input", function() {
+                selectedValue_9.textContent = "Q9: " + rangeInput_9.value;
+            });
+
+
+
+        </script>
+
+        <input type="submit" value="Predict!"> 
+    </form>
+    {% if result %}
+        <h2> There is more than 70% that this user {{result}}</h2>
+    {% endif %}
+</body>
+</html>
+								
