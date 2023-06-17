@@ -1,11 +1,10 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 import pickle as pkl
-
+import joblib
 from joblib import dump, load
-#model = load(r"C:\Users\Windows 10\mlproject\pkmodel" + ".pickle")
-model = load('pkmodel.pickle')
-
+# model = load(r"C:\Users\Windows 10\mlproject\pkmodel" + ".pickle")
+model = load('picklemodel.pickle2')
 # def form(request):
 #     if request.method == 'POST':
 #             price = request.POST['price']
